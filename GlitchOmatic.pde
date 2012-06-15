@@ -1,4 +1,3 @@
-//~~~~~~~~~~~~~~~~~~
 int numFrames = 5010;  // number of frames
 int numChanges = 40; // default 100 changes
 String[] source = new String[numFrames];
