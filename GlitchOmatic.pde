@@ -1,21 +1,20 @@
 int numChanges = 40; // default 100 changes
 String targetDir = "render";
 String fileType = "png";
-ArrayList imgNames;
 PImage tempImage;
 int counter=0;
 int counterMax=100;
-String folderPath;
-File dataFolder;
 float snowFrameOdds = 0.5; //0 to 1
 int delayTime = 100;
 
 void setup(){
+  size(50,50);
   Settings settings = new Settings("settings.txt");
-  chooseFolderDialog();
+  //chooseFolderDialog();
+  loadFiles();
   try{
     tempImage = loadImage((String) imgNames.get(0));
-    size(tempImage.width,tempImage.height);
+    surface.setSize(tempImage.width,tempImage.height);
   }catch(Exception e){
     println("No image files loaded. Exiting...");
     exit();
@@ -57,9 +56,3 @@ void glitchCounterHandler(){
     counter=0;
   }
 }
-
-String zeroPadding(int _val, int _maxVal){
-  String q = ""+_maxVal;
-  return nf(_val,q.length());
-}
-

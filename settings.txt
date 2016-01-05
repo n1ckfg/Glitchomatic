@@ -1,8 +1,8 @@
 Number of Glitches per Image
-40
+10
 
 Odds of a Totally Glitched Image
-0.02
+0.01
 
 Target File Format
 png
