@@ -1,16 +1,15 @@
 class Settings {
 
-  Data settings;
+  String[] data;
 
   Settings(String _s) {
     try {
-      settings = new Data();
-      settings.load(_s);
-      for (int i=0;i<settings.data.length;i++) {
-        if (settings.data[i].equals("Number of Glitches per Image")) numChanges = setInt(settings.data[i+1]);
-        if (settings.data[i].equals("Odds of a Totally Glitched Image")) snowFrameOdds = setFloat(settings.data[i+1]);
-        if (settings.data[i].equals("Target File Format")) fileType = setString(settings.data[i+1]);
-        if (settings.data[i].equals("Target Directory")) targetDir = setString(settings.data[i+1]);
+      data = loadStrings(_s);
+      for (int i=0;i<data.length;i++) {
+        if (data[i].equals("Number of Glitches per Image")) numChanges = setInt(data[i+1]);
+        if (data[i].equals("Odds of a Totally Glitched Image")) snowFrameOdds = setFloat(data[i+1]);
+        if (data[i].equals("Target File Format")) fileType = setString(data[i+1]);
+        if (data[i].equals("Target Directory")) targetDir = setString(data[i+1]);
       }
     } 
     catch(Exception e) {
@@ -84,4 +83,3 @@ class Settings {
       return endColor;
   }
 }
-
