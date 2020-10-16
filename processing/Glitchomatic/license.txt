@@ -1,4 +1,4 @@
-GlitchOmatic was developed with support from:
+Glitchomatic was developed with support from:
    Canada Council for the Arts
 Copyright (c) 2013 Nick Fox-Gieg Animation
 http://fox-gieg.com
