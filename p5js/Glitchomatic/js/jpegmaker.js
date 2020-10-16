@@ -1,15 +1,17 @@
+"use strict";
+
 class JpegMaker {
   //Processing port of Antonio Roberts' ( hellocatfood.com ) PD patch
 
-  int sW = 640;
-  int sH = 480;
+  let sW = 640;
+  let sH = 480;
   PImage img;
   String target = "";
 
-  int counter=0;
-  int numElements = 4000; //elements to add per frame, orig 4000
-  int sizeLimit = 80000; //orig 80000
-  int reps = 100;
+  let counter=0;
+  let numElements = 4000; //elements to add per frame, orig 4000
+  let sizeLimit = 80000; //orig 80000
+  let reps = 100;
   
   ArrayList dataMaster;
   ArrayList dataCurrent;
@@ -22,49 +24,49 @@ class JpegMaker {
   };
   int[] jpegElement = new int[numElements];
 
-  JpegMaker(int _w, int _h, String _t){
+  JpegMaker(let _w, let _h, String _t) {
     sW = _w;
     sH = _h;
     target = _t;
     jpegBegin();
-    while(dataMaster.size()<sizeLimit){
+    while(dataMaster.size()<sizeLimit) {
       jpegMiddle();
       jpegEnd();  
       jpegSave();
       try {
         img = loadImage(target);
         image(img, 0, 0,width,height);
-      }catch(Exception e){ }
+      } catch (e) { }
     }   
   }
 
-  void jpegBegin() {
+  function jpegBegin() {
     dataMaster = new ArrayList();
     dataCurrent = new ArrayList();
     counter++;
-    for (int i=0;i<jpegHeader.length;i++) {
+    for (let i=0;i<jpegHeader.length;i++) {
       dataMaster.add(jpegHeader[i]);
     }
   }
 
-  void jpegMiddle() {
-    for (int i=0;i<jpegElement.length;i++) {
+  function jpegMiddle() {
+    for (let i=0;i<jpegElement.length;i++) {
       jpegElement[i] = int(random(255));
       dataMaster.add(jpegElement[i]);
     }
   }
 
-  void jpegEnd() {
+  function jpegEnd() {
     dataCurrent = dataMaster;
-    for (int i=0;i<jpegFooter.length;i++) {
+    for (let i=0;i<jpegFooter.length;i++) {
       dataCurrent.add(jpegFooter[i]);
     }
   }
 
-  void jpegSave() {
+  function jpegSave() {
     byte[] bytes = new byte[dataCurrent.size()];
-    for (int j=0;j<bytes.length;j++) {
-      int temp = (Integer) dataCurrent.get(j);
+    for (let j=0;j<bytes.length;j++) {
+      let temp = (Integer) dataCurrent.get(j);
       bytes[j] = byte(temp);
     }
     saveBytes(target, bytes);
