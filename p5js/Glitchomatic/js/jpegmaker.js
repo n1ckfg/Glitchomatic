@@ -23,13 +23,13 @@ class JpegMaker {
         this.jpegFooter = [ 215, 217 ];
         this.jpegElement = [];
 
-        jpegBegin();
-        while (dataMaster.size() < sizeLimit) {
-            jpegMiddle();
-            jpegEnd();    
-            jpegSave();
+        this.jpegBegin();
+        while (this.dataMaster.length < this.sizeLimit) {
+            this.jpegMiddle();
+            this.jpegEnd();    
+            this.jpegSave();
             try {
-                img = loadImage(target);
+                this.img = loadImage(target);
                 image(img, 0, 0,width,height);
             } catch (e) { }
         }     
