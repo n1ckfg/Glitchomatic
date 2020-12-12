@@ -3,11 +3,10 @@
 class JpegMaker {
     // p5.js port of Antonio Roberts' ( hellocatfood.com ) PD patch
 
-    constructor(_w, _h, _t) {  // int, int, string
-        this.sW = _w; //640;
-        this.sH = _h; //480;
-        this.target = _t; //"";  // string
-        this.img;  // PImage
+    constructor(img) {  // int, int, string
+        this.img = img;  // PImage
+        this.sW = this.img.width; //640;
+        this.sH = this.img.height; //480;
 
         this.counter=0;
         this.numElements = 4000; //elements to add per frame, orig 4000
@@ -28,10 +27,6 @@ class JpegMaker {
             this.jpegMiddle();
             this.jpegEnd();    
             this.jpegSave();
-            try {
-                this.img = loadImage(target);
-                image(img, 0, 0,width,height);
-            } catch (e) { }
         }     
     }
 
@@ -59,14 +54,14 @@ class JpegMaker {
     }
 
     jpegSave() {
-        byte[] bytes = new byte[dataCurrent.size()];
+        let bytes = new byte[dataCurrent.size()];
         
         for (let j = 0; j < bytes.length; j++) {
             let temp = parseInt(dataCurrent[j]);
             bytes[j] = byte(temp);
         }
 
-        saveBytes(this.target, bytes);
+        //saveBytes(this.target, bytes);
     }
 
 }

@@ -6,10 +6,11 @@ int counter=0;
 int counterMax=100;
 float snowFrameOdds = 0.5; //0 to 1
 int delayTime = 100;
+Settings settings;
 
 void setup(){
   size(50,50);
-  Settings settings = new Settings("settings.txt");
+  settings = new Settings("settings.txt");
   //chooseFolderDialog();
   loadFiles();
   try{

@@ -1,30 +1,50 @@
 "use strict";
 
-let numChanges = 40; // default 100 changes
-let targetDir = "render";
-let fileType = "png";
+const numChanges = 40; // default 100 changes
 let tempImage; // PImage
 let counter=0;
 let counterMax=100;
 let snowFrameOdds = 0.5; //0 to 1
 let delayTime = 100;
-
-function preload() {
-
-}
+let armCanvasResize = false;
+let armGlitch = false;
+let dropImage;
+let glitch;
 
 function setup() {
     createCanvas(800, 600);
+}
 
-    loadFiles();
-    try {
-        tempImage = loadImage((String) imgNames.get(0));
-        surface.setSize(tempImage.width,tempImage.height);
-    } catch (e) {
-        console.log("No image files loaded.");
+function draw() {
+    background(0);
+
+    if (armDropResult) {
+        dropImage = loadImage(dropResult);
+        armDropResult = false;
+        armCanvasResize = true;
+    }
+
+    if (armCanvasResize) {
+        if (dropImage !== undefined && dropImage.width !== 1 && dropImage.height !== 1) {
+            resizeCanvas(dropImage.width, dropImage.height);
+            glitch = new JpegMaker(dropImage.width, dropImage.height);
+            armCanvasResize = false;
+            armGlitch = true;
+        }
+    }
+
+    if (armGlitch) {
+
+        armGlitch = false;
+    }
+
+    if (dropImage !== undefined) {
+        image(dropImage, 0, 0);
     }
 }
 
+
+/*
 function draw() {
     //create glitches
     for (let i = 0; i < imgNames.size(); i++) {
@@ -60,3 +80,4 @@ function glitchCounterHandler() {
         counter=0;
     }
 }
+*/
