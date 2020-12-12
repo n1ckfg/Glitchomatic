@@ -27,14 +27,13 @@ function draw() {
     if (armCanvasResize) {
         if (dropImage !== undefined && dropImage.width !== 1 && dropImage.height !== 1) {
             resizeCanvas(dropImage.width, dropImage.height);
-            glitch = new JpegMaker(dropImage.width, dropImage.height);
             armCanvasResize = false;
             armGlitch = true;
         }
     }
 
     if (armGlitch) {
-
+        // TODO
         armGlitch = false;
     }
 
