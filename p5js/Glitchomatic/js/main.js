@@ -1,6 +1,7 @@
 "use strict";
 
 const numChanges = 40; // default 100 changes
+const jpegHeader = "data:image/jpeg;base64,";
 let counter=0;
 let counterMax=100;
 let snowFrameOdds = 0; //0 to 1
@@ -8,10 +9,18 @@ let delayTime = 100;
 let armCanvasResize = false;
 let armGlitch = false;
 let dropImage;
-let dropBytes;
+let startUrl = "./images/blockbuster_mid.jpg";
 
 function setup() {
-    createCanvas(512, 512);
+    dropImage = loadImage(startUrl, function() {
+        createCanvas(dropImage.width, dropImage.height);
+
+        loadBytes(startUrl, function(result) {
+            dropResult = jpegHeader + Uint8ToBase64(result.bytes);
+            console.log(dropResult);
+            armDropResult = true;
+        });
+    });
 }
 
 function draw() {
@@ -22,7 +31,6 @@ function draw() {
 
         dropImage = loadImage(dropResult, function() {
             resizeCanvas(dropImage.width, dropImage.height);
-
             doGlitch();
         });
     }
@@ -33,18 +41,18 @@ function draw() {
 }
 
 function doGlitch() {
-    dropBytes = loadBytes(dropResult, function(result) {
+    loadBytes(dropResult, function(result) {
         let data = result.bytes;
         
         if (random(1) < snowFrameOdds) {
-            dropImage = loadImage("data:image/jpeg;base64," + Uint8ToBase64(new JpegMaker(dropImage, data).bytes));
+            dropImage = loadImage(jpegHeader + Uint8ToBase64(new JpegMaker(dropImage, data).bytes));
         } else {
             for (let j = 0; j < numChanges; j++) {
                 let loc = parseInt(random(128, data.length)); // guess at header being 128 bytes at most..
                 data[loc] = byte(parseInt(random(255)));
             }
             
-            dropImage = loadImage("data:image/jpeg;base64," + Uint8ToBase64(data));
+            dropImage = loadImage(jpegHeader + Uint8ToBase64(data));
         }
     });
 }
