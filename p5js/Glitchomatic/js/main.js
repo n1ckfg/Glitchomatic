@@ -17,7 +17,6 @@ function setup() {
 
         loadBytes(startUrl, function(result) {
             dropResult = jpegHeader + Uint8ToBase64(result.bytes);
-            console.log(dropResult);
             armDropResult = true;
         });
     });
