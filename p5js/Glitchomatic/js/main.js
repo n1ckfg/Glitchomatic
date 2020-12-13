@@ -23,26 +23,30 @@ function draw() {
         dropImage = loadImage(dropResult, function() {
             resizeCanvas(dropImage.width, dropImage.height);
 
-            dropBytes = loadBytes(dropResult, function(result) {
-                let data = result.bytes;
-                
-                if (random(1) < snowFrameOdds) {
-                    dropImage = loadImage("data:image/jpeg;base64," + Uint8ToBase64(new JpegMaker(dropImage, data).bytes));
-                } else {
-                    for (let j = 0; j < numChanges; j++) {
-                        let loc = parseInt(random(128, data.length)); // guess at header being 128 bytes at most..
-                        data[loc] = byte(parseInt(random(255)));
-                    }
-                    
-                    dropImage = loadImage("data:image/jpeg;base64," + Uint8ToBase64(data));
-                }
-            });
+            doGlitch();
         });
     }
 
     if (dropImage !== undefined) {
         image(dropImage, 0, 0);
     }
+}
+
+function doGlitch() {
+    dropBytes = loadBytes(dropResult, function(result) {
+        let data = result.bytes;
+        
+        if (random(1) < snowFrameOdds) {
+            dropImage = loadImage("data:image/jpeg;base64," + Uint8ToBase64(new JpegMaker(dropImage, data).bytes));
+        } else {
+            for (let j = 0; j < numChanges; j++) {
+                let loc = parseInt(random(128, data.length)); // guess at header being 128 bytes at most..
+                data[loc] = byte(parseInt(random(255)));
+            }
+            
+            dropImage = loadImage("data:image/jpeg;base64," + Uint8ToBase64(data));
+        }
+    });
 }
 
 function Uint8ToBase64(bytes) {
@@ -58,4 +62,8 @@ function Uint8ToBase64(bytes) {
         index += CHUNK_SIZE;
     }
     return btoa(result);
+}
+
+function keyPressed() {
+    if (dropResult !== undefined) doGlitch();
 }
