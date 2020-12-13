@@ -21,7 +21,6 @@ function draw() {
         armDropResult = false;
 
         dropImage = loadImage(dropResult);
-        dropBytes = loadBytes(dropResult);
 
         armCanvasResize = true;
     }
@@ -38,13 +37,16 @@ function draw() {
         if (random(1) < snowFrameOdds) {
             dropImage = loadImage("data:image/jpeg;base64," + Uint8ToBase64(new JpegMaker(dropImage).bytes));
         } else {
-            let data = dropBytes;
-            for (let j = 0; j < numChanges; j++) {
-                let loc = parseInt(random(128, data.length));//guess at header being 128 bytes at most..
-                data[loc] = byte(parseInt(random(255)));
-            }
-            
-            dropImage = loadImage("data:image/jpeg;base64," + Uint8ToBase64(dropBytes.bytes));
+            dropBytes = loadBytes(dropResult, function(result) {
+                let data = result.bytes;
+                
+                for (let j = 0; j < numChanges; j++) {
+                    let loc = parseInt(random(128, data.length));//guess at header being 128 bytes at most..
+                    data[loc] = byte(parseInt(random(255)));
+                }
+                
+                dropImage = loadImage("data:image/jpeg;base64," + Uint8ToBase64(data));
+            });
         }
 
         armGlitch = false;
