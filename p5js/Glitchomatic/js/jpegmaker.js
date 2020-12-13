@@ -5,13 +5,10 @@ class JpegMaker {
 
     constructor(img) {  // int, int, string
         this.img = img;  // PImage
-        this.sW = this.img.width; //640;
-        this.sH = this.img.height; //480;
 
         this.counter=0;
         this.numElements = 4000; //elements to add per frame, orig 4000
         this.sizeLimit = 80000; //orig 80000
-        this.reps = 100;
         
         this.dataMaster;  // array
         this.dataCurrent;  // array
@@ -23,6 +20,9 @@ class JpegMaker {
         this.jpegElement = [];
 
         this.jpegBegin();
+        
+        this.bytes;
+
         while (this.dataMaster.length < this.sizeLimit) {
             this.jpegMiddle();
             this.jpegEnd();    
@@ -42,26 +42,27 @@ class JpegMaker {
     jpegMiddle() {
         for (let i = 0; i < this.numElements; i++) {
             this.jpegElement.push(parseInt(random(255)));
-            this.dataMaster.add(this.jpegElement[i]);
+            this.dataMaster.push(this.jpegElement[i]);
         }
     }
 
     jpegEnd() {
         this.dataCurrent = this.dataMaster;
         for (let i = 0; i < this.jpegFooter.length; i++) {
-            this.dataCurrent.add(this.jpegFooter[i]);
+            this.dataCurrent.push(this.jpegFooter[i]);
         }
     }
 
     jpegSave() {
-        let bytes = new byte[dataCurrent.size()];
+        let bytes = [];
         
-        for (let j = 0; j < bytes.length; j++) {
-            let temp = parseInt(dataCurrent[j]);
+        for (let j = 0; j < this.dataCurrent.length; j++) {
+            let temp = parseInt(this.dataCurrent[j]);
             bytes[j] = byte(temp);
         }
 
-        //saveBytes(this.target, bytes);
+        this.bytes = bytes;
+        console.log(this.bytes);
     }
 
 }
